@@ -1,5 +1,9 @@
+import view.OrdenamientoBurbujaGUI;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        OrdenamientoBurbujaGUI dialog = new OrdenamientoBurbujaGUI();
+        dialog.setVisible(true);
+        System.exit(0);
     }
 }
