@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Ordenamiento {
     /**
      * Ordena un int[] ascendentemente.
@@ -85,6 +88,64 @@ public class Ordenamiento {
         return x;
     }
 
+    public int[] quickSortAscendente(int[] x) {
+        List<Integer> izqList = new ArrayList<>();
+        List<Integer> derList = new ArrayList<>();
+        int t = x.length;
+        int ePivot = -1;
+        for (int i = 0; i < t; i++) {
+            if (ePivot == -1) {
+                ePivot = x[i];
+            }
+            if (x[i] == ePivot) {
+                continue;
+            } else if (x[i] < ePivot) {
+                izqList.add(x[i]);
+            } else {
+                derList.add(x[i]);
+            }
+        }
+        if (izqList.size() > 1) {
+            int[] a = convertListToArray(izqList);
+            a = this.quickSortAscendente(a);
+            izqList = convertArrayToList(a);
+        } else if (derList.size() > 1) {
+            int[] a = convertListToArray(derList);
+            a = this.quickSortAscendente(a);
+            derList = this.convertArrayToList(a);
+        }
+        System.out.println(izqList);
+        System.out.println(derList);
+        System.out.println(ePivot);
+        return this.joinDerListPivotIzqList(izqList, derList,ePivot);
+    }
+
+    private int[] joinDerListPivotIzqList(List<Integer> m, List<Integer> n, int p) {
+        List<Integer> x = new ArrayList<>(m);
+        x.add(p);
+        for(int e: n){
+            x.add(e);
+        }
+        return this.convertListToArray(x);
+    }
+
+    private List<Integer> convertArrayToList(int[] x) {
+        List<Integer> a = new ArrayList<>();
+        for (int e : x) {
+            a.add(e);
+        }
+        return a;
+    }
+
+    private int[] convertListToArray(List<Integer> x) {
+        int[] a = new int[x.size()];
+        int t = x.size();
+        for (int i = 0; i < t; i++) {
+            a[i] = x.get(i);
+        }
+        return a;
+    }
+
     /*
      * Métodos adicionales
      */
@@ -139,6 +200,7 @@ public class Ordenamiento {
     }
 
     public static void main(String[] args) {
+        /*
         Ordenamiento ordenamiento = new Ordenamiento();
         int[] x = ordenamiento.getArray(10);
         System.out.println("Array int original:");
@@ -159,5 +221,14 @@ public class Ordenamiento {
         s = ordenamiento.burbujaDescendente(s);
         System.out.println('\n' + "Array string ordenado descendentemente:");
         ordenamiento.showArray(s);
+        */
+
+        Ordenamiento ordenamiento = new Ordenamiento();
+        int e = ordenamiento.calcAleatorio(0,9);
+        int[] x = ordenamiento.getArray(e);
+        ordenamiento.showArray(x);
+        x = ordenamiento.quickSortAscendente(x);
+        ordenamiento.showArray(x);
+
     }
 }
