@@ -88,42 +88,85 @@ public class Ordenamiento {
         return x;
     }
 
+    /**
+     * Return an array of Integer sorted by quick sort method asc.
+     *
+     * @param x array Integer
+     * @return array sorted
+     */
     public int[] quickSortAscendente(int[] x) {
         List<Integer> izqList = new ArrayList<>();
         List<Integer> derList = new ArrayList<>();
+        List<Integer> ePivotList = new ArrayList<>();
         int t = x.length;
         int ePivot = -1;
         for (int i = 0; i < t; i++) {
             if (ePivot == -1) {
                 ePivot = x[i];
             }
-            if (x[i] == ePivot) {
-                continue;
-            } else if (x[i] < ePivot) {
+            if (x[i] < ePivot) {
                 izqList.add(x[i]);
-            } else {
+            } else if (x[i] > ePivot) {
                 derList.add(x[i]);
+            } else {
+                ePivotList.add(x[i]);
             }
         }
         if (izqList.size() > 1) {
             int[] a = convertListToArray(izqList);
             a = this.quickSortAscendente(a);
             izqList = convertArrayToList(a);
-        } else if (derList.size() > 1) {
+        }
+        if (derList.size() > 1) {
             int[] a = convertListToArray(derList);
             a = this.quickSortAscendente(a);
             derList = this.convertArrayToList(a);
         }
-        System.out.println(izqList);
-        System.out.println(derList);
-        System.out.println(ePivot);
-        return this.joinDerListPivotIzqList(izqList, derList,ePivot);
+        return this.joinDerListPivotIzqList(izqList, derList, ePivotList);
     }
 
-    private int[] joinDerListPivotIzqList(List<Integer> m, List<Integer> n, int p) {
+    /**
+     * Return an array of integer sorted descendent
+     * @param x array of integer
+     * @return array sorted
+     */
+    public int[] quickSortDescendente(int[] x) {
+        List<Integer> izqList = new ArrayList<>();
+        List<Integer> derList = new ArrayList<>();
+        List<Integer> ePivotList = new ArrayList<>();
+        int t = x.length;
+        int ePivot = -1;
+        for (int i = 0; i < t; i++) {
+            if (ePivot == -1) {
+                ePivot = x[i];
+            }
+            if (x[i] > ePivot) {
+                izqList.add(x[i]);
+            } else if (x[i] < ePivot) {
+                derList.add(x[i]);
+            } else {
+                ePivotList.add(x[i]);
+            }
+        }
+        if (izqList.size() > 1) {
+            int[] a = convertListToArray(izqList);
+            a = this.quickSortDescendente(a);
+            izqList = convertArrayToList(a);
+        }
+        if (derList.size() > 1) {
+            int[] a = convertListToArray(derList);
+            a = this.quickSortDescendente(a);
+            derList = this.convertArrayToList(a);
+        }
+        return this.joinDerListPivotIzqList(izqList, derList, ePivotList);
+    }
+
+    private int[] joinDerListPivotIzqList(List<Integer> m, List<Integer> n, List<Integer> p) {
         List<Integer> x = new ArrayList<>(m);
-        x.add(p);
-        for(int e: n){
+        for (int e : p) {
+            x.add(e);
+        }
+        for (int e : n) {
             x.add(e);
         }
         return this.convertListToArray(x);
@@ -224,10 +267,15 @@ public class Ordenamiento {
         */
 
         Ordenamiento ordenamiento = new Ordenamiento();
-        int e = ordenamiento.calcAleatorio(0,9);
+        int e = ordenamiento.calcAleatorio(2, 9);
         int[] x = ordenamiento.getArray(e);
+        int[] t = x;
         ordenamiento.showArray(x);
         x = ordenamiento.quickSortAscendente(x);
+        System.out.println('\n' + "Ordenamiento ascendente");
+        ordenamiento.showArray(x);
+        System.out.println('\n' + "Ordenamiento descendente");
+        x = ordenamiento.quickSortDescendente(t);
         ordenamiento.showArray(x);
 
     }
