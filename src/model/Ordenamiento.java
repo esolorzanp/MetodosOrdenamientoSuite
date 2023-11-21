@@ -113,20 +113,21 @@ public class Ordenamiento {
             }
         }
         if (izqList.size() > 1) {
-            int[] a = convertListToArray(izqList);
+            int[] a = convertListIntToArray(izqList);
             a = this.quickSortAscendente(a);
-            izqList = convertArrayToList(a);
+            izqList = convertArrayToListInt(a);
         }
         if (derList.size() > 1) {
-            int[] a = convertListToArray(derList);
+            int[] a = convertListIntToArray(derList);
             a = this.quickSortAscendente(a);
-            derList = this.convertArrayToList(a);
+            derList = this.convertArrayToListInt(a);
         }
-        return this.joinDerListPivotIzqList(izqList, derList, ePivotList);
+        return this.joinDerPivotIzqListInt(izqList, derList, ePivotList);
     }
 
     /**
      * Return an array of integer sorted descendent
+     *
      * @param x array of integer
      * @return array sorted
      */
@@ -149,19 +150,81 @@ public class Ordenamiento {
             }
         }
         if (izqList.size() > 1) {
-            int[] a = convertListToArray(izqList);
+            int[] a = convertListIntToArray(izqList);
             a = this.quickSortDescendente(a);
-            izqList = convertArrayToList(a);
+            izqList = convertArrayToListInt(a);
         }
         if (derList.size() > 1) {
-            int[] a = convertListToArray(derList);
+            int[] a = convertListIntToArray(derList);
             a = this.quickSortDescendente(a);
-            derList = this.convertArrayToList(a);
+            derList = this.convertArrayToListInt(a);
         }
-        return this.joinDerListPivotIzqList(izqList, derList, ePivotList);
+        return this.joinDerPivotIzqListInt(izqList, derList, ePivotList);
     }
 
-    private int[] joinDerListPivotIzqList(List<Integer> m, List<Integer> n, List<Integer> p) {
+    public String[] quickSortAscendente(String[] x) {
+        List<String> izqList = new ArrayList<>();
+        List<String> derList = new ArrayList<>();
+        List<String> ePivotList = new ArrayList<>();
+        int t = x.length;
+        String ePivot = "";
+        for (int i = 0; i < t; i++) {
+            if (ePivot == "") {
+                ePivot = x[i];
+            }
+            if (x[i].compareTo(ePivot) < 0) {
+                izqList.add(x[i]);
+            } else if (x[i].compareTo(ePivot) > 0) {
+                derList.add(x[i]);
+            } else {
+                ePivotList.add(x[i]);
+            }
+        }
+        if (izqList.size() > 1) {
+            String[] a = convertListStringToArray(izqList);
+            a = this.quickSortAscendente(a);
+            izqList = convertArrayToListString(a);
+        }
+        if (derList.size() > 1) {
+            String[] a = convertListStringToArray(derList);
+            a = this.quickSortAscendente(a);
+            derList = this.convertArrayToListString(a);
+        }
+        return this.joinDerPivotIzqListString(izqList, derList, ePivotList);
+    }
+
+    public String[] quickSortDescendente(String[] x) {
+        List<String> izqList = new ArrayList<>();
+        List<String> derList = new ArrayList<>();
+        List<String> ePivotList = new ArrayList<>();
+        int t = x.length;
+        String ePivot = "";
+        for (int i = 0; i < t; i++) {
+            if (ePivot == "") {
+                ePivot = x[i];
+            }
+            if (x[i].compareTo(ePivot) > 0) {
+                izqList.add(x[i]);
+            } else if (x[i].compareTo(ePivot) < 0) {
+                derList.add(x[i]);
+            } else {
+                ePivotList.add(x[i]);
+            }
+        }
+        if (izqList.size() > 1) {
+            String[] a = convertListStringToArray(izqList);
+            a = this.quickSortDescendente(a);
+            izqList = convertArrayToListString(a);
+        }
+        if (derList.size() > 1) {
+            String[] a = convertListStringToArray(derList);
+            a = this.quickSortDescendente(a);
+            derList = this.convertArrayToListString(a);
+        }
+        return this.joinDerPivotIzqListString(izqList, derList, ePivotList);
+    }
+
+    private int[] joinDerPivotIzqListInt(List<Integer> m, List<Integer> n, List<Integer> p) {
         List<Integer> x = new ArrayList<>(m);
         for (int e : p) {
             x.add(e);
@@ -169,10 +232,21 @@ public class Ordenamiento {
         for (int e : n) {
             x.add(e);
         }
-        return this.convertListToArray(x);
+        return this.convertListIntToArray(x);
     }
 
-    private List<Integer> convertArrayToList(int[] x) {
+    private String[] joinDerPivotIzqListString(List<String> m, List<String> n, List<String> p) {
+        List<String> x = new ArrayList<>(m);
+        for (String e : p) {
+            x.add(e);
+        }
+        for (String e : n) {
+            x.add(e);
+        }
+        return this.convertListStringToArray(x);
+    }
+
+    private List<Integer> convertArrayToListInt(int[] x) {
         List<Integer> a = new ArrayList<>();
         for (int e : x) {
             a.add(e);
@@ -180,8 +254,25 @@ public class Ordenamiento {
         return a;
     }
 
-    private int[] convertListToArray(List<Integer> x) {
+    private int[] convertListIntToArray(List<Integer> x) {
         int[] a = new int[x.size()];
+        int t = x.size();
+        for (int i = 0; i < t; i++) {
+            a[i] = x.get(i);
+        }
+        return a;
+    }
+
+    private List<String> convertArrayToListString(String[] x) {
+        List<String> a = new ArrayList<>();
+        for (String e : x) {
+            a.add(e);
+        }
+        return a;
+    }
+
+    private String[] convertListStringToArray(List<String> x) {
+        String[] a = new String[x.size()];
         int t = x.size();
         for (int i = 0; i < t; i++) {
             a[i] = x.get(i);
@@ -272,11 +363,20 @@ public class Ordenamiento {
         int[] t = x;
         ordenamiento.showArray(x);
         x = ordenamiento.quickSortAscendente(x);
-        System.out.println('\n' + "Ordenamiento ascendente");
+        System.out.println('\n' + "Ordenamiento int ascendente");
         ordenamiento.showArray(x);
-        System.out.println('\n' + "Ordenamiento descendente");
+        System.out.println('\n' + "Ordenamiento int descendente");
         x = ordenamiento.quickSortDescendente(t);
         ordenamiento.showArray(x);
 
+        String[] s = ordenamiento.getArray(5, 3);
+        System.out.println('\n' + "Array string original:");
+        ordenamiento.showArray(s);
+        s = ordenamiento.quickSortAscendente(s);
+        System.out.println('\n' + "Array string ordenado ascendentemente:");
+        ordenamiento.showArray(s);
+        s = ordenamiento.quickSortDescendente(s);
+        System.out.println('\n' + "Array string ordenado descendentemente:");
+        ordenamiento.showArray(s);
     }
 }
