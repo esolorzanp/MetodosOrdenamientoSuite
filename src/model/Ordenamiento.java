@@ -89,7 +89,7 @@ public class Ordenamiento {
     }
 
     /**
-     * Return an array of Integer sorted by quick sort method asc.
+     * Return an array of Integer sorted by quick sort method ascending.
      *
      * @param x array Integer
      * @return array sorted
@@ -126,7 +126,7 @@ public class Ordenamiento {
     }
 
     /**
-     * Return an array of integer sorted descendent
+     * Return an array of integer sorted descending by quick sort method
      *
      * @param x array of integer
      * @return array sorted
@@ -162,6 +162,11 @@ public class Ordenamiento {
         return this.joinDerPivotIzqListInt(izqList, derList, ePivotList);
     }
 
+    /**
+     * Return an array of String ordered ascending by quick sort method
+     * @param x array of String
+     * @return array sorted ascending
+     */
     public String[] quickSortAscending(String[] x) {
         List<String> izqList = new ArrayList<>();
         List<String> derList = new ArrayList<>();
@@ -193,6 +198,11 @@ public class Ordenamiento {
         return this.joinDerPivotIzqListString(izqList, derList, ePivotList);
     }
 
+    /**
+     * Return an array of String ordered descending by quick sort method
+     * @param x array of String
+     * @return array ordered
+     */
     public String[] quickSortDescending(String[] x) {
         List<String> izqList = new ArrayList<>();
         List<String> derList = new ArrayList<>();

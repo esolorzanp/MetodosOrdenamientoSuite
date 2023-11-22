@@ -125,8 +125,8 @@ public class OrdenamientoGUI extends JDialog {
             if (!sortingCtrl.hasItemsExpStringList()) {
                 JOptionPane.showMessageDialog(null, "La lista de expresiones está vacía, debe ingresarle expresiones alfbéticas o numércias", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-//                long startTime = System.currentTimeMillis();
-                long startTime = System.nanoTime();
+                long startTime = System.currentTimeMillis();
+//                long startTime = System.nanoTime();
                 if (bubbleRadioButton.isSelected()) {
                     if (ascendenteRadioButton.isSelected()) {
                         sortingCtrl.sortBubbleAscendingListString();
@@ -140,16 +140,16 @@ public class OrdenamientoGUI extends JDialog {
                         sortingCtrl.sortQuickDescendingListString();
                     }
                 }
-//                long endTime = System.currentTimeMillis();
-                long endTime = System.nanoTime();
+                long endTime = System.currentTimeMillis();
+//                long endTime = System.nanoTime();
                 fillOrdTextArea(startTime, endTime);
             }
         } else if (numericaRadioButton.isSelected()) {
             if (!sortingCtrl.hasItemsExpIntegerList()) {
                 JOptionPane.showMessageDialog(null, "La lista de expresiones está vacía, debe ingresarle expresiones alfbéticas o numércias", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-//                long startTime = System.currentTimeMillis();
-                long startTime = System.nanoTime();
+                long startTime = System.currentTimeMillis();
+//                long startTime = System.nanoTime();
                 if (bubbleRadioButton.isSelected()) {
                     if (ascendenteRadioButton.isSelected()) {
                         sortingCtrl.sortBubbleAscendingListInteger();
@@ -163,9 +163,9 @@ public class OrdenamientoGUI extends JDialog {
                         sortingCtrl.sortQuickDescendingListInteger();
                     }
                 }
-//                long endTime = System.currentTimeMillis();
-                long endTime = System.nanoTime();
-                fillOrdTextArea(startTime,endTime);
+                long endTime = System.currentTimeMillis();
+//                long endTime = System.nanoTime();
+                fillOrdTextArea(startTime, endTime);
             }
         }
     }
@@ -193,7 +193,8 @@ public class OrdenamientoGUI extends JDialog {
     private void fillOrdTextArea(long startTime, long endTime) {
         String strTime = "\n\n" //'\n' + '\n'
                 + "Tiempo transcurrido: "
-                + (endTime - startTime) + " nanosegundos";
+//                + (endTime - startTime) + " nanosegundos";
+                + (endTime - startTime) + " milisegundos";
         if (alfabeticaRadioButton.isSelected()) {
             ordeTextArea.setText(sortingCtrl.getSortString() + strTime);
         } else if (numericaRadioButton.isSelected()) {
