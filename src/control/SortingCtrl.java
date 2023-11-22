@@ -5,13 +5,13 @@ import model.Ordenamiento;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrdenamientoBurbujaCtrl {
+public class SortingCtrl {
     List<String> exprStringList;
     List<String> ordeStringList;
     List<Integer> exprIntegerList;
     List<Integer> ordeIntegerList;
 
-    public OrdenamientoBurbujaCtrl() {
+    public SortingCtrl() {
         initLists();
     }
 
@@ -39,7 +39,7 @@ public class OrdenamientoBurbujaCtrl {
         return str;
     }
 
-    public String getOrdeString() {
+    public String getSortString() {
         String str = "";
         for (String e : ordeStringList) {
             str += e + '\n';
@@ -47,7 +47,7 @@ public class OrdenamientoBurbujaCtrl {
         return str;
     }
 
-    public String getOrdeInteger() {
+    public String getSortInteger() {
         String str = "";
         for (int e : ordeIntegerList) {
             str += "" + e + '\n';
@@ -70,7 +70,7 @@ public class OrdenamientoBurbujaCtrl {
         ordeIntegerList = new ArrayList<>();
     }
 
-    public boolean ordenarAscendenteListaString() {
+    public boolean sortBubbleAscendingListString() {
         Ordenamiento orden = new Ordenamiento();
         ordeStringList = new ArrayList<>();
         int t = exprStringList.size();
@@ -78,14 +78,14 @@ public class OrdenamientoBurbujaCtrl {
         for (int i = 0; i < t; i++) {
             x[i] = exprStringList.get(i);
         }
-        x = orden.burbujaAscendente(x);
+        x = orden.bubbleAscending(x);
         for (String e : x) {
             ordeStringList.add(e);
         }
         return true;
     }
 
-    public boolean ordenarDescendenteListaString() {
+    public boolean sortBubbleDescendingListString() {
         Ordenamiento orden = new Ordenamiento();
         ordeStringList = new ArrayList<>();
         int t = exprStringList.size();
@@ -93,14 +93,14 @@ public class OrdenamientoBurbujaCtrl {
         for (int i = 0; i < t; i++) {
             x[i] = exprStringList.get(i);
         }
-        x = orden.burbujaDescendente(x);
+        x = orden.bubbleDescending(x);
         for (String e : x) {
             ordeStringList.add(e);
         }
         return true;
     }
 
-    public boolean ordenarAscendenteListaInteger() {
+    public boolean sortBubbleAscendingListInteger() {
         Ordenamiento orden = new Ordenamiento();
         ordeIntegerList = new ArrayList<>();
         int t = exprIntegerList.size();
@@ -108,14 +108,14 @@ public class OrdenamientoBurbujaCtrl {
         for (int i = 0; i < t; i++) {
             x[i] = exprIntegerList.get(i);
         }
-        x = orden.burbujaAscendente(x);
+        x = orden.bubbleAscending(x);
         for (int e : x) {
             ordeIntegerList.add(e);
         }
         return true;
     }
 
-    public boolean ordenarDescendenteListaInteger() {
+    public boolean sortBubbleDescendingListInteger() {
         Ordenamiento orden = new Ordenamiento();
         ordeIntegerList = new ArrayList<>();
         int t = exprIntegerList.size();
@@ -123,11 +123,89 @@ public class OrdenamientoBurbujaCtrl {
         for (int i = 0; i < t; i++) {
             x[i] = exprIntegerList.get(i);
         }
-        x = orden.burbujaDescendente(x);
+        x = orden.bubbleDescending(x);
         for (int e : x) {
             ordeIntegerList.add(e);
         }
         return true;
     }
 
+    /*
+     *
+     * ********************************************
+     *
+     */
+    public boolean sortQuickSortAscendingListString() {
+        Ordenamiento orden = new Ordenamiento();
+        ordeStringList = new ArrayList<>();
+        int t = exprStringList.size();
+        String[] x = new String[t];
+        for (int i = 0; i < t; i++) {
+            x[i] = exprStringList.get(i);
+        }
+        x = orden.quickSortAscending(x);
+        for (String e : x) {
+            ordeStringList.add(e);
+        }
+        return true;
+    }
+
+    public boolean sortQuickDescendingListString() {
+        Ordenamiento orden = new Ordenamiento();
+        ordeStringList = new ArrayList<>();
+        int t = exprStringList.size();
+        String[] x = new String[t];
+        for (int i = 0; i < t; i++) {
+            x[i] = exprStringList.get(i);
+        }
+        x = orden.quickSortDescending(x);
+        for (String e : x) {
+            ordeStringList.add(e);
+        }
+        return true;
+    }
+
+    public boolean sortQuickAscendingListInteger() {
+        Ordenamiento orden = new Ordenamiento();
+        ordeIntegerList = new ArrayList<>();
+        int t = exprIntegerList.size();
+        int[] x = new int[t];
+        for (int i = 0; i < t; i++) {
+            x[i] = exprIntegerList.get(i);
+        }
+        x = orden.quickSortAscending(x);
+        for (int e : x) {
+            ordeIntegerList.add(e);
+        }
+        return true;
+    }
+
+    public boolean sortQuickDescendingListInteger() {
+        Ordenamiento orden = new Ordenamiento();
+        ordeIntegerList = new ArrayList<>();
+        int t = exprIntegerList.size();
+        int[] x = new int[t];
+        for (int i = 0; i < t; i++) {
+            x[i] = exprIntegerList.get(i);
+        }
+        x = orden.quickSortDescending(x);
+        for (int e : x) {
+            ordeIntegerList.add(e);
+        }
+        return true;
+    }
+
+    public void cargarLista(int ord) {
+        Ordenamiento orden = new Ordenamiento();
+        this.initLists();
+        if (ord == 0) {
+            for (String e : orden.getArray(1000, 25)) {
+                exprStringList.add(e);
+            }
+        } else if (ord == 1) {
+            for (int e : orden.getArray(1000)) {
+                exprIntegerList.add(e);
+            }
+        }
+    }
 }

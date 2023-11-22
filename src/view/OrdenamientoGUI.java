@@ -1,6 +1,6 @@
 package view;
 
-import control.OrdenamientoBurbujaCtrl;
+import control.SortingCtrl;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -12,6 +12,7 @@ public class OrdenamientoGUI extends JDialog {
     private JButton agregarButton;
     private JButton limpiarListasButton;
     private JButton ordenarButton;
+    private JButton cargarListaButton;
     private JTextField expTextField;
     private JRadioButton alfabeticaRadioButton;
     private JRadioButton bubbleRadioButton;
@@ -20,18 +21,19 @@ public class OrdenamientoGUI extends JDialog {
     private JRadioButton ascendenteRadioButton;
     private JRadioButton descendenteRadioButton;
     private JTextArea expTextArea;
-    private JTextArea textArea2;
+    private JTextArea ordeTextArea;
     private ButtonGroup expresionBtng;
     private ButtonGroup metodoBtng;
     private ButtonGroup ordenarBtng;
-    private OrdenamientoBurbujaCtrl burbujaCtrl;
+    private SortingCtrl sortingCtrl;
 
     public OrdenamientoGUI() {
-        burbujaCtrl = new OrdenamientoBurbujaCtrl();
+        sortingCtrl = new SortingCtrl();
 
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
+        setTitle("Sorting methods: Bubble and QuickSort");
 
         expresionBtng = new ButtonGroup();
         alfabeticaRadioButton.setSelected(true);
@@ -46,12 +48,14 @@ public class OrdenamientoGUI extends JDialog {
         ordenarBtng.add(ascendenteRadioButton);
         ordenarBtng.add(descendenteRadioButton);
         expTextArea.setEditable(false);
+        ordeTextArea.setEditable(false);
 
         buttonOK.addActionListener(e -> onOK());
         buttonCancel.addActionListener(e -> onCancel());
         agregarButton.addActionListener(e -> onAgregar());
         limpiarListasButton.addActionListener(e -> onLimpiarListas());
         ordenarButton.addActionListener(e -> onOrdenar());
+        cargarListaButton.addActionListener(e -> onCargarLista());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -68,7 +72,7 @@ public class OrdenamientoGUI extends JDialog {
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
-        setSize(800, 400);
+        setSize(800, 600);
         setLocationRelativeTo(this);
         setVisible(true);
     }
@@ -82,7 +86,7 @@ public class OrdenamientoGUI extends JDialog {
                 if (!esExpresionString(exp)) {
                     JOptionPane.showMessageDialog(null, "La expresión alfabética no corresponde a una palabra u oración", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    if (!burbujaCtrl.add(exp)) {
+                    if (!sortingCtrl.add(exp)) {
                         JOptionPane.showMessageDialog(null, "La expresión alfabética no fue agregada", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         fillExpTextArea();
@@ -93,7 +97,7 @@ public class OrdenamientoGUI extends JDialog {
             } else if (numericaRadioButton.isSelected()) {
                 try {
                     int expNum = Integer.parseInt(exp);
-                    if (!burbujaCtrl.add(expNum)) {
+                    if (!sortingCtrl.add(expNum)) {
                         JOptionPane.showMessageDialog(null, "La expresión alfabética no fue agregada", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         fillExpTextArea();
@@ -107,46 +111,68 @@ public class OrdenamientoGUI extends JDialog {
                 }
             }
         }
-
     }
 
     private void onLimpiarListas() {
-        System.out.println("click en Limpiar listas");
         expTextField.setText("");
         expTextArea.setText("");
-        burbujaCtrl.initLists();
+        ordeTextArea.setText("");
+        sortingCtrl.initLists();
     }
 
     private void onOrdenar() {
-        System.out.println("click en Ordenar");
         if (alfabeticaRadioButton.isSelected()) {
-            if (!burbujaCtrl.hasItemsExpStringList()) {
+            if (!sortingCtrl.hasItemsExpStringList()) {
                 JOptionPane.showMessageDialog(null, "La lista de expresiones está vacía, debe ingresarle expresiones alfbéticas o numércias", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                if (ascendenteRadioButton.isSelected()) {
-                    burbujaCtrl.ordenarAscendenteListaString();
-                } else if (descendenteRadioButton.isSelected()) {
-                    burbujaCtrl.ordenarDescendenteListaString();
+//                long startTime = System.currentTimeMillis();
+                long startTime = System.nanoTime();
+                if (bubbleRadioButton.isSelected()) {
+                    if (ascendenteRadioButton.isSelected()) {
+                        sortingCtrl.sortBubbleAscendingListString();
+                    } else if (descendenteRadioButton.isSelected()) {
+                        sortingCtrl.sortBubbleDescendingListString();
+                    }
+                } else if (quickSorteRadioButton.isSelected()) {
+                    if (ascendenteRadioButton.isSelected()) {
+                        sortingCtrl.sortQuickSortAscendingListString();
+                    } else if (descendenteRadioButton.isSelected()) {
+                        sortingCtrl.sortQuickDescendingListString();
+                    }
                 }
-                fillOrdTextArea();
+//                long endTime = System.currentTimeMillis();
+                long endTime = System.nanoTime();
+                fillOrdTextArea(startTime, endTime);
             }
         } else if (numericaRadioButton.isSelected()) {
-            if (!burbujaCtrl.hasItemsExpIntegerList()) {
+            if (!sortingCtrl.hasItemsExpIntegerList()) {
                 JOptionPane.showMessageDialog(null, "La lista de expresiones está vacía, debe ingresarle expresiones alfbéticas o numércias", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                if (ascendenteRadioButton.isSelected()) {
-                    burbujaCtrl.ordenarAscendenteListaInteger();
-                } else if (descendenteRadioButton.isSelected()) {
-                    burbujaCtrl.ordenarDescendenteListaInteger();
+//                long startTime = System.currentTimeMillis();
+                long startTime = System.nanoTime();
+                if (bubbleRadioButton.isSelected()) {
+                    if (ascendenteRadioButton.isSelected()) {
+                        sortingCtrl.sortBubbleAscendingListInteger();
+                    } else if (descendenteRadioButton.isSelected()) {
+                        sortingCtrl.sortBubbleDescendingListInteger();
+                    }
+                } else if (quickSorteRadioButton.isSelected()) {
+                    if (ascendenteRadioButton.isSelected()) {
+                        sortingCtrl.sortQuickAscendingListInteger();
+                    } else if (descendenteRadioButton.isSelected()) {
+                        sortingCtrl.sortQuickDescendingListInteger();
+                    }
                 }
-                fillOrdTextArea();
+//                long endTime = System.currentTimeMillis();
+                long endTime = System.nanoTime();
+                fillOrdTextArea(startTime,endTime);
             }
         }
     }
 
     private boolean esExpresionString(String x) {
         boolean b = true;
-        String caracteresValidos = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ";
+        String caracteresValidos = "ÁÉÍÓÚABCDEFGHIJKLMNÑOPQRSTUVWXYZáéíóúabcdefghijklmnñopqrstuvwxyz ";
         int t = x.length();
         for (int i = 0; i < t; i++) {
             if (!caracteresValidos.contains(String.valueOf(x.charAt(i)))) {
@@ -158,19 +184,30 @@ public class OrdenamientoGUI extends JDialog {
 
     private void fillExpTextArea() {
         if (alfabeticaRadioButton.isSelected()) {
-            expTextArea.setText(burbujaCtrl.getExprString());
+            expTextArea.setText(sortingCtrl.getExprString());
         } else if (numericaRadioButton.isSelected()) {
-            expTextArea.setText(burbujaCtrl.getExprInteger());
+            expTextArea.setText(sortingCtrl.getExprInteger());
         }
     }
 
-    private void fillOrdTextArea() {
+    private void fillOrdTextArea(long startTime, long endTime) {
+        String strTime = "\n\n" //'\n' + '\n'
+                + "Tiempo transcurrido: "
+                + (endTime - startTime) + " nanosegundos";
         if (alfabeticaRadioButton.isSelected()) {
-            expTextArea.setText(burbujaCtrl.getOrdeString());
+            ordeTextArea.setText(sortingCtrl.getSortString() + strTime);
         } else if (numericaRadioButton.isSelected()) {
-            expTextArea.setText(burbujaCtrl.getOrdeInteger());
+            ordeTextArea.setText(sortingCtrl.getSortInteger() + strTime);
         }
+    }
 
+    private void onCargarLista() {
+        if (alfabeticaRadioButton.isSelected()) {
+            sortingCtrl.cargarLista(0);
+        } else if (numericaRadioButton.isSelected()) {
+            sortingCtrl.cargarLista(1);
+        }
+        fillExpTextArea();
     }
 
     private void onOK() {
@@ -186,7 +223,6 @@ public class OrdenamientoGUI extends JDialog {
     public static void main(String[] args) {
         OrdenamientoGUI dialog = new OrdenamientoGUI();
         dialog.pack();
-//        dialog.setVisible(true);
         System.exit(0);
     }
 }

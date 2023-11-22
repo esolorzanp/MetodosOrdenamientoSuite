@@ -1,6 +1,6 @@
 package view;
 
-import control.OrdenamientoBurbujaCtrl;
+import control.SortingCtrl;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -21,10 +21,10 @@ public class OrdenamientoBurbujaGUI extends JDialog {
     private JRadioButton numericaRadioButton;
     private ButtonGroup expBtnGroup;
     private ButtonGroup ordBtnGroup;
-    private OrdenamientoBurbujaCtrl burbujaCtrl;
+    private SortingCtrl burbujaCtrl;
 
     public OrdenamientoBurbujaGUI() {
-        burbujaCtrl = new OrdenamientoBurbujaCtrl();
+        burbujaCtrl = new SortingCtrl();
 
         setContentPane(contentPane);
         setModal(true);
@@ -109,9 +109,9 @@ public class OrdenamientoBurbujaGUI extends JDialog {
 
     private void fillOrdTextArea() {
         if (alfabeticaRadioButton.isSelected()) {
-            ordTextArea.setText(burbujaCtrl.getOrdeString());
+            ordTextArea.setText(burbujaCtrl.getSortString());
         } else if (numericaRadioButton.isSelected()) {
-            ordTextArea.setText(burbujaCtrl.getOrdeInteger());
+            ordTextArea.setText(burbujaCtrl.getSortInteger());
         }
     }
 
@@ -139,9 +139,9 @@ public class OrdenamientoBurbujaGUI extends JDialog {
                 JOptionPane.showMessageDialog(null, "La lista de expresiones está vacía, debe ingresarle expresiones alfbéticas o numércias", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (ascendenteRadioButton.isSelected()) {
-                    burbujaCtrl.ordenarAscendenteListaString();
+                    burbujaCtrl.sortBubbleAscendingListString();
                 } else if (descendenteRadioButton.isSelected()) {
-                    burbujaCtrl.ordenarDescendenteListaString();
+                    burbujaCtrl.sortBubbleDescendingListString();
                 }
                 fillOrdTextArea();
             }
@@ -150,9 +150,9 @@ public class OrdenamientoBurbujaGUI extends JDialog {
                 JOptionPane.showMessageDialog(null, "La lista de expresiones está vacía, debe ingresarle expresiones alfbéticas o numércias", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
                 if (ascendenteRadioButton.isSelected()) {
-                    burbujaCtrl.ordenarAscendenteListaInteger();
+                    burbujaCtrl.sortBubbleAscendingListInteger();
                 } else if (descendenteRadioButton.isSelected()) {
-                    burbujaCtrl.ordenarDescendenteListaInteger();
+                    burbujaCtrl.sortBubbleDescendingListInteger();
                 }
                 fillOrdTextArea();
             }
